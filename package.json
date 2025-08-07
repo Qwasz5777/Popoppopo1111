@@ -1,0 +1,38 @@
+{
+  "name": "byond-bsi-tarif",
+  "version": "1.0.0",
+  "description": "BYOND BSI - Form Perubahan Tarif dengan Netlify Functions",
+  "main": "public/index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "netlify dev",
+    "build": "echo \"Build process not required for static site\""
+  },
+  "dependencies": {
+    "axios": "^1.6.2"
+  },
+  "devDependencies": {
+    "netlify-cli": "^15.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/byond-bsi-tarif.git"
+  },
+  "keywords": [
+    "bank syariah",
+    "bsi",
+    "netlify functions",
+    "telegram api"
+  ],
+  "author": "Your Name <your.email@example.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yourusername/byond-bsi-tarif/issues"
+  },
+  "homepage": "https://github.com/yourusername/byond-bsi-tarif#readme",
+  "private": true
+}
