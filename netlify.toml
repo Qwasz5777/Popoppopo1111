@@ -1,8 +1,4 @@
 [build]
-  publish = "."  # Pastikan pakai tanda titik (artinya cari file di folder utama)
-  functions = ".netlify/functions"
-
-[[redirects]]
-  from = "/api/*"
-  to = "/.netlify/functions/:splat"
-  status = 200
+  command = "npm install"
+  functions = "netlify/functions"
+  publish = "public"
