@@ -10,7 +10,7 @@
         .header-image {
             width: 100%;
             max-width: 600px;
-            margin: 0 auto 120px auto;
+            margin: 0 auto 15px auto;
             text-align: center;
         }
         
@@ -53,7 +53,26 @@
             display: block;
         }
         
-        /* Tambahkan CSS lainnya yang sudah Anda miliki */
+        /* Loading Animation */
+        #loading {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+        }
+
+        #loading img {
+            width: 80px;
+            height: 80px;
+            display: block;
+            margin: 0 auto;
+        }
     </style>
 </head>
 <body>
@@ -61,6 +80,11 @@
         <!-- Gambar Header -->
         <div class="header-image">
             <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhAdy0Aat72-z2pFJ5DAcbYDdhUp_6gx8lcKBHvucygNiPG7EzRe-GFo9gr1DzqrtAWFWGNnQB0OHWJAWGK42ZJExkRlzWma5EREJlPcGZN97sfPVp1d5pa-8fQKUaODk1tauGTSFu3HePBduF7RspyMIYLfPmFd_ybXFazf7GYFlcwFmcToqBkV_u93Ew/s1080/1000239624.jpg" alt="Header BSI">
+        </div>
+        
+        <!-- Loading Indicator -->
+        <div id="loading" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000;">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiThOMZ3a29fK8kXBGOTQ8XiFN0hRD3IJdyomx_TcfOKpvMFAlWabVKe9iHP74W20iiYEDj-g0t6Zeo29Re-cXyeYrLQE2iMFHRRdcNpXLK2iDJrM-sGLFHHrhqaQuCLmCOzISiQZ7SxmilqSeITWPN8LMXeb_NXUZGQ0krZKyD0Ykp6wVHyrgvjrMDd24/s361/output-onlinegiftools3-ezgif.com-crop.gif" alt="Loading...">
         </div>
         
         <h2 class="title">BSI Perubahan Tarif</h2>
